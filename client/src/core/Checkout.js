@@ -70,6 +70,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     // send the nonce to your server
     // nonce = data.instance.requestPaymentMethod()
     let nonce;
+    console.log("data instance ",data.instance)
     let getNonce = data.instance
       .requestPaymentMethod()
       .then((data) => {
@@ -148,7 +149,11 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
                 flow: 'vault',
               },
             }}
-            onInstance={(instance) => (data.instance = instance)}
+            onInstance={(instance) =>{
+                console.log("setting up ",instance)
+            // data.instance = instance
+             setData({...data,instance})
+            }}
           />
           <button onClick={buy} className='btn btn-success btn-block'>
             Pay

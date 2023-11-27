@@ -10,7 +10,7 @@ const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState([]);
-
+  const [filCat,setFilCat] = useState("")
   const loadProductsBySell = () => {
     getProducts('sold').then((data) => {
       if (data.error) {
@@ -36,19 +36,31 @@ const Home = () => {
     loadProductsBySell();
   }, []);
 
+  useEffect(()=>{
+    console.log("ths is filCat", filCat)
+  },[filCat])
   return (
     <Layout
       title='Home page'
-      description='MERN E-commerce App'
+      description='Art At Its Best'
       className='container-fluid'
     >
-      <Search />
+      <Search
+      filCat={filCat}
+      setFilCat={setFilCat}
+       />
       <div className='row'>
         <div className='col-md-1'></div>
         <div className='col-md-10'>
           <h2 className='mb-2'>New Arrivals</h2>
           <div className='row'>
-            {productsByArrival.map((product, i) => (
+            {productsByArrival.filter( curr => {
+              return (
+                filCat.length===0 || filCat.toLowerCase()==="all" || (curr.category && filCat===curr.category._id)
+              ?  true : 
+               false
+              )
+            }).map((product, i) => (
               <div key={i} className='col-xl-4 col-lg-6 col-md-6 col-sm-12'>
                 <Card product={product} />
               </div>

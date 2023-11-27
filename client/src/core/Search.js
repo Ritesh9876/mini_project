@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = () => {
+const Search = (props) => {
   const [data, setData] = useState({
     categories: [],
     category: '',
@@ -78,6 +78,7 @@ const Search = () => {
   };
 
   const handleChange = (name) => (event) => {
+    props.setFilCat(event.target.value)
     setData({ ...data, [name]: event.target.value, searched: false });
   };
 
